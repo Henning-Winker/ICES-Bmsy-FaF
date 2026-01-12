@@ -16,14 +16,6 @@ library(FLCore)
 library(msy) # EQSIM
 
 
-stks <- FLStocks(lapply(stksR,function(x){
-  stk <- as(x,"FLStock")
-  attr(stk,"stockinfo") <- x@stockinfo
-  attr(stk,"benchmark") <- x@benchmark
-  return(stk)
-}))
-save(stks, file="../data/ICES_stksinp_n82.Rdata")
-
 # Load stocks input as FLR object
 # setwd to working directory to source file ~ICES-Bmsy-FaF/data/ICES_stksinp_n82.Rdata
 load("../data/ICES_stksinp_n82.Rdata",verbose = T)
@@ -94,7 +86,6 @@ SIM <- eqsim_run(FIT, bio.years=bio.years, bio.const=FALSE, sel.years=sel.years,
   BMSY/B0
   Flim <- BF_50perc1$x[which.min(abs(BF_50perc1$y-Blim))]
   
-  frp <- data.frame(benchmarks[i,3:8])
   eqsim = data.frame(stock= stk@name)
   
   eqsim$Catchequi <- Catchequi
@@ -112,5 +103,6 @@ SIM <- eqsim_run(FIT, bio.years=bio.years, bio.const=FALSE, sel.years=sel.years,
 
 # Test if EQSIM outcomes are assigned
 stks.bs$her.27.3031@eqsim
+
 
 
